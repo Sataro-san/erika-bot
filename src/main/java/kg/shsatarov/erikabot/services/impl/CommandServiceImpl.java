@@ -1,6 +1,7 @@
-package kg.shsatarov.erikabot.services;
+package kg.shsatarov.erikabot.services.impl;
 
 import kg.shsatarov.erikabot.cache.CommandCache;
+import kg.shsatarov.erikabot.services.CommandService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;

@@ -1,4 +1,4 @@
-package kg.shsatarov.erikabot.commands.currency;
+package kg.shsatarov.erikabot.commands.balance;
 
 import kg.shsatarov.erikabot.commands.ExecutableCommand;
 import kg.shsatarov.erikabot.services.UserService;

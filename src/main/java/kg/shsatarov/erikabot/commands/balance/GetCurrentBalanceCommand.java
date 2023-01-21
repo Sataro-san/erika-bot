@@ -1,6 +1,8 @@
-package kg.shsatarov.erikabot.commands.currency;
+package kg.shsatarov.erikabot.commands.balance;
 
 import kg.shsatarov.erikabot.commands.ExecutableCommand;
+import kg.shsatarov.erikabot.entities.UserBalance;
+import kg.shsatarov.erikabot.services.UserBalanceService;
 import kg.shsatarov.erikabot.services.UserService;
 import kg.shsatarov.erikabot.utils.StringFormatter;
 import lombok.RequiredArgsConstructor;
@@ -11,12 +13,15 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 @Slf4j
 @RequiredArgsConstructor
 public class GetCurrentBalanceCommand implements ExecutableCommand {
 
     private final UserService userService;
+    private final UserBalanceService userBalanceService;
 
     @Value("${constants.salaryRoleId}")
     private String salaryRoleId;
@@ -47,9 +52,10 @@ public class GetCurrentBalanceCommand implements ExecutableCommand {
         }
 
 
-        slashCommandEvent
-                .reply(StringFormatter.format("{} ваш баланс Канабаксов: {} шт.", member.getAsMention(), 0))
-                .queue();
+        userBalanceService.getEntityByDiscordUserId(member.getId())
+                .ifPresentOrElse(
+                        userBalance -> slashCommandEvent.reply(StringFormatter.format("{} ваш баланс Канабаксов: {} шт.", member.getAsMention(), userBalance.getBalance())).queue(),
+                        () -> slashCommandEvent.reply("Ваш баланс не найден").queue());
 
     }
 }

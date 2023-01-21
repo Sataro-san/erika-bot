@@ -1,5 +1,6 @@
-package kg.shsatarov.erikabot.services;
+package kg.shsatarov.erikabot.services.impl;
 
+import kg.shsatarov.erikabot.services.UserService;
 import net.dv8tion.jda.api.entities.Member;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
