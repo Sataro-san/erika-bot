@@ -32,8 +32,9 @@ public class ErikaBotConfig {
                 .setActivity(Activity.watching("Doki Doki"))
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
                 .setChunkingFilter(ChunkingFilter.ALL)
-                .enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_VOICE_STATES)
+                .enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_PRESENCES)
                 .enableCache(CacheFlag.VOICE_STATE)
+                .enableCache(CacheFlag.ACTIVITY)
                 .addEventListeners(slashCommandListener)
                 .build();
     }

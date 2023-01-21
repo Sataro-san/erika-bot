@@ -1,4 +1,4 @@
-package kg.shsatarov.erikabot.commands.voice_channel.doomfist;
+package kg.shsatarov.erikabot.commands.voice_channel.overwatch.doomfist;
 
 import kg.shsatarov.erikabot.commands.ExecutableCommand;
 import kg.shsatarov.erikabot.lava_player.PlayerManager;
@@ -10,16 +10,16 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @NoArgsConstructor
-public class OpinionCommand implements ExecutableCommand {
+public class AndTheySayCommand implements ExecutableCommand {
 
     @Override
     public String getName() {
-        return "opinion";
+        return "deysay";
     }
 
     @Override
     public String getDescription() {
-        return "Did I ask?";
+        return "And they say...";
     }
 
     @Override
@@ -27,7 +27,7 @@ public class OpinionCommand implements ExecutableCommand {
 
         try {
 
-            String voiceLineURL = "https://static1.squarespace.com/static/59af2189c534a58c97bd63b3/t/5af351e0562fa7cf25063079/1525895649225/Doomfist+voice+line+I+didn%27t+ask+for+your+opinion.ogg/original/Doomfist+voice+line+I+didn%27t+ask+for+your+opinion.ogg";
+            String voiceLineURL = "https://static1.squarespace.com/static/59af2189c534a58c97bd63b3/t/5af3519c6d2a737c17579d99/1525895580720/Doomfist+voice+line+They+say+chivalry+is+dead.ogg/original/Doomfist+voice+line+They+say+chivalry+is+dead.ogg";
 
             PlayerManager.getInstance().playMusicLocal(slashCommandEvent.getGuild(), voiceLineURL, 100L);
 

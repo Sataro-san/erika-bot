@@ -1,4 +1,4 @@
-package kg.shsatarov.erikabot.commands.voice_channel.doomfist;
+package kg.shsatarov.erikabot.commands.voice_channel.overwatch.doomfist;
 
 import kg.shsatarov.erikabot.commands.ExecutableCommand;
 import kg.shsatarov.erikabot.lava_player.PlayerManager;
@@ -7,19 +7,18 @@ import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.springframework.stereotype.Component;
 
-@Component
-@Slf4j
 @NoArgsConstructor
-public class AndTheySayCommand implements ExecutableCommand {
-
+@Slf4j
+@Component
+public class OnePunchCommand implements ExecutableCommand {
     @Override
     public String getName() {
-        return "deysay";
+        return "op";
     }
 
     @Override
     public String getDescription() {
-        return "And they say...";
+        return ";)";
     }
 
     @Override
@@ -27,7 +26,7 @@ public class AndTheySayCommand implements ExecutableCommand {
 
         try {
 
-            String voiceLineURL = "https://static1.squarespace.com/static/59af2189c534a58c97bd63b3/t/5af3519c6d2a737c17579d99/1525895580720/Doomfist+voice+line+They+say+chivalry+is+dead.ogg/original/Doomfist+voice+line+They+say+chivalry+is+dead.ogg";
+            String voiceLineURL = "https://static.wikia.nocookie.net/overwatch_gamepedia/images/0/08/Doomfist_-_One_punch_is_all_I_need.ogg/revision/latest?cb=20170813140029";
 
             PlayerManager.getInstance().playMusicLocal(slashCommandEvent.getGuild(), voiceLineURL, 100L);
 

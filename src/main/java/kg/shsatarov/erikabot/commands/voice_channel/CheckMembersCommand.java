@@ -4,6 +4,7 @@ import kg.shsatarov.erikabot.commands.ExecutableCommand;
 import kg.shsatarov.erikabot.utils.StringFormatter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -29,7 +30,13 @@ public class CheckMembersCommand implements ExecutableCommand {
     @Override
     public void execute(SlashCommandInteractionEvent slashCommandEvent) {
 
-        VoiceChannel voiceChannel = slashCommandEvent.getGuild().getVoiceChannelCache().getElementById(1045014265926537268L);
+        GuildVoiceState memberVoiceState = slashCommandEvent.getMember().getVoiceState();
+
+        if (!memberVoiceState.inAudioChannel()) {
+            slashCommandEvent.reply("Присоединитесь в голосовой чат для выполнения команды").queue();
+        }
+
+        VoiceChannel voiceChannel = slashCommandEvent.getGuild().getVoiceChannelCache().getElementById(memberVoiceState.getChannel().getId());
 
         List<Member> members = voiceChannel.getMembers();
 

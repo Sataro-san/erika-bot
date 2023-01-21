@@ -1,4 +1,4 @@
-package kg.shsatarov.erikabot.commands.voice_channel.doomfist;
+package kg.shsatarov.erikabot.commands.voice_channel.overwatch.doomfist;
 
 import kg.shsatarov.erikabot.commands.ExecutableCommand;
 import kg.shsatarov.erikabot.lava_player.PlayerManager;
@@ -7,18 +7,19 @@ import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.springframework.stereotype.Component;
 
-@NoArgsConstructor
-@Slf4j
 @Component
-public class OnePunchCommand implements ExecutableCommand {
+@Slf4j
+@NoArgsConstructor
+public class OpinionCommand implements ExecutableCommand {
+
     @Override
     public String getName() {
-        return "op";
+        return "opinion";
     }
 
     @Override
     public String getDescription() {
-        return ";)";
+        return "Did I ask?";
     }
 
     @Override
@@ -26,7 +27,7 @@ public class OnePunchCommand implements ExecutableCommand {
 
         try {
 
-            String voiceLineURL = "https://static.wikia.nocookie.net/overwatch_gamepedia/images/0/08/Doomfist_-_One_punch_is_all_I_need.ogg/revision/latest?cb=20170813140029";
+            String voiceLineURL = "https://static1.squarespace.com/static/59af2189c534a58c97bd63b3/t/5af351e0562fa7cf25063079/1525895649225/Doomfist+voice+line+I+didn%27t+ask+for+your+opinion.ogg/original/Doomfist+voice+line+I+didn%27t+ask+for+your+opinion.ogg";
 
             PlayerManager.getInstance().playMusicLocal(slashCommandEvent.getGuild(), voiceLineURL, 100L);
 

@@ -9,4 +9,8 @@ public class StringFormatter {
 
         return org.slf4j.helpers.MessageFormatter.arrayFormat(messagePattern, arguments).getMessage();
     }
+
+    public String fromMentionedToId(String mentioned) {
+        return mentioned.replaceAll("<@", "").replaceAll(">", "");
+    }
 }

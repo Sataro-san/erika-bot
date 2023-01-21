@@ -28,15 +28,7 @@ public class RunErikaBot implements CommandLineRunner {
 
     private List<CommandData> toCommandDataCollection(List<ExecutableCommand> executableCommands) {
 
-        return executableCommands.stream().map(this::toCommandData).toList();
+        return executableCommands.stream().map(executableCommand -> executableCommand.toCommandData()).toList();
 
-    }
-
-    private CommandData toCommandData(ExecutableCommand executableCommand) {
-
-        return switch (executableCommand.getType()) {
-            case SLASH -> Commands.slash(executableCommand.getName(), executableCommand.getDescription());
-
-        };
     }
 }

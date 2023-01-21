@@ -2,5 +2,6 @@ jda:
   token: ${JDA_TOKEN}
 
 constants:
+  salaryRoleId: ${SALARY_ROLE_ID}
   respectUserId: ${RESPECT_USER_ID}
   goodManId: ${GOOD_MAN_ID}

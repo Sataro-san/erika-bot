@@ -1,4 +1,4 @@
-package kg.shsatarov.erikabot.commands.voice_channel;
+package kg.shsatarov.erikabot.commands.voice_channel.overwatch;
 
 import kg.shsatarov.erikabot.commands.ExecutableCommand;
 import kg.shsatarov.erikabot.lava_player.PlayerManager;
