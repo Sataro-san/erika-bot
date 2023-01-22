@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.channel.unions.AudioChannelUnion;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +50,18 @@ public class ActivityBalanceScheduler {
 
         for (UserBalance userBalance : userBalances) {
             Member member = guild.getMemberById(userBalance.getDiscordUserId());
-            rewardGuildMember(member);
+
+            //reward only if in voice channel
+            if (member.getVoiceState().inAudioChannel()) {
+                AudioChannelUnion memberVoiceChannel = member.getVoiceState().getChannel();
+                if (memberVoiceChannel.getMembers().size() > 1) {
+                    rewardGuildMember(member);
+                }
+
+            } else {
+                log.info("member {} {} not in voice channel", member.getId(), member.getUser().getName());
+            }
+
         }
 
     }

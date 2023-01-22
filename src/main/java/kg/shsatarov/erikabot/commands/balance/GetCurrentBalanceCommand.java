@@ -1,7 +1,6 @@
 package kg.shsatarov.erikabot.commands.balance;
 
 import kg.shsatarov.erikabot.commands.ExecutableCommand;
-import kg.shsatarov.erikabot.entities.UserBalance;
 import kg.shsatarov.erikabot.services.UserBalanceService;
 import kg.shsatarov.erikabot.services.UserService;
 import kg.shsatarov.erikabot.utils.StringFormatter;
@@ -12,8 +11,6 @@ import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 @Component
 @Slf4j
