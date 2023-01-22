@@ -29,7 +29,7 @@ public class ReloadActivityRateCacheCommand implements ExecutableCommand {
 
         activityBalanceRateService.reloadCache();
 
-        slashCommandEvent.reply("Кэш активностей обновлён :white_check_mark:");
+        slashCommandEvent.reply("Кэш активностей обновлён :white_check_mark:").queue();
 
     }
 }
