@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,6 +16,11 @@ import java.util.Optional;
 public class UserBalanceServiceImpl implements UserBalanceService {
 
     private final UserBalanceRepository userBalanceRepository;
+
+    @Override
+    public List<UserBalance> getAll() {
+        return userBalanceRepository.findAll();
+    }
 
     @Override
     public Optional<UserBalance> getEntityByDiscordUserId(String discordUserId) {
@@ -32,10 +38,11 @@ public class UserBalanceServiceImpl implements UserBalanceService {
     }
 
     @Override
-    public UserBalance createUserBalance(String discordUserId) {
+    public UserBalance createUserBalance(String discordUserId, String discordGuildId) {
         UserBalance newUserBalance = new UserBalance();
         newUserBalance.setDiscordUserId(discordUserId);
         newUserBalance.setBalance(BigDecimal.ZERO);
+        newUserBalance.setDiscordGuildId(discordGuildId);
 
         return userBalanceRepository.save(newUserBalance);
     }

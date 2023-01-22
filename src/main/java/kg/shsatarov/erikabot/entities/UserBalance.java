@@ -16,7 +16,11 @@ public class UserBalance {
     @SequenceGenerator(name = "USER_BALANCES_SEQ", allocationSize = 1)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String discordUserId;
+
+    @Column(nullable = false)
+    private String discordGuildId;
 
     private BigDecimal balance;
 

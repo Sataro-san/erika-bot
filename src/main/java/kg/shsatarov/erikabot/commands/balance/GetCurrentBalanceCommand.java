@@ -55,7 +55,7 @@ public class GetCurrentBalanceCommand implements ExecutableCommand {
         userBalanceService.getEntityByDiscordUserId(member.getId())
                 .ifPresentOrElse(
                         userBalance -> slashCommandEvent.reply(StringFormatter.format("{} ваш баланс Канабаксов: {} шт.", member.getAsMention(), userBalance.getBalance())).queue(),
-                        () -> slashCommandEvent.reply("Ваш баланс не найден").queue());
+                        () -> slashCommandEvent.reply("Ваш баланс не найден, для создания баланса выполните команду /create-balance").queue());
 
     }
 }

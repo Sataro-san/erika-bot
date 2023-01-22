@@ -52,14 +52,17 @@ public class GetActivityCommand implements ExecutableCommand {
             return;
         }
 
-        Activity activity = member.getActivities().stream().findAny().orElse(null);
+        Activity activity = member.getActivities().stream()
+                .filter(currentActivity -> Activity.ActivityType.PLAYING.equals(currentActivity.getType()))
+                .findFirst()
+                .orElse(null);
 
         if (activity == null) {
             slashCommandEvent.reply(StringFormatter.format("{} has no activities", member.getAsMention())).queue();
             return;
         }
 
-        slashCommandEvent.reply(StringFormatter.format("{} {} {}", member.getAsMention(), activity.getType(), activity.getName())).queue();
+        slashCommandEvent.reply(StringFormatter.format("{} {} {} applicationId {}", member.getAsMention(), activity.getType(), activity.getName(), activity.asRichPresence().getApplicationId())).queue();
 
     }
 

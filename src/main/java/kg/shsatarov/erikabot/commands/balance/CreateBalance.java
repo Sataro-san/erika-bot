@@ -56,7 +56,7 @@ public class CreateBalance implements ExecutableCommand {
             return;
         }
 
-        userBalanceService.createUserBalance(member.getId());
+        userBalanceService.createUserBalance(member.getId(), member.getGuild().getId());
         slashCommandEvent
                 .reply(StringFormatter.format("{} баланс был создан!", member.getAsMention()))
                 .queue();
