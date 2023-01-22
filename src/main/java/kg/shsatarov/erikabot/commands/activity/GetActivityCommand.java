@@ -1,4 +1,4 @@
-package kg.shsatarov.erikabot.commands.balance;
+package kg.shsatarov.erikabot.commands.activity;
 
 import kg.shsatarov.erikabot.commands.ExecutableCommand;
 import kg.shsatarov.erikabot.services.UserService;
@@ -46,7 +46,7 @@ public class GetActivityCommand implements ExecutableCommand {
 
         if (!userService.hasSalaryRole(member)) {
             slashCommandEvent
-                    .reply(StringFormatter.format("{} не обладает ролью \"{}\"", member.getAsMention(), salaryRole.getName()))
+                    .reply(StringFormatter.format("{} не обладает ролью \"{}\" :no_entry_sign:", member.getAsMention(), salaryRole.getName()))
                     .queue();
 
             return;

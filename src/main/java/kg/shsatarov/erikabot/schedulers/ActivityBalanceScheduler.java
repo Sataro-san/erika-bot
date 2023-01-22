@@ -7,6 +7,7 @@ import kg.shsatarov.erikabot.services.UserBalanceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -51,15 +52,15 @@ public class ActivityBalanceScheduler {
         for (UserBalance userBalance : userBalances) {
             Member member = guild.getMemberById(userBalance.getDiscordUserId());
 
-            //reward only if in voice channel
-            if (member.getVoiceState().inAudioChannel()) {
+            //reward only if online and in voice channel
+            if (OnlineStatus.ONLINE.equals(member.getOnlineStatus()) && member.getVoiceState().inAudioChannel()) {
                 AudioChannelUnion memberVoiceChannel = member.getVoiceState().getChannel();
                 if (memberVoiceChannel.getMembers().size() > 1) {
                     rewardGuildMember(member);
                 }
 
             } else {
-                log.info("member {} {} not in voice channel", member.getId(), member.getUser().getName());
+                log.info("User {} {} is not ONLINE or not in voice channel", member.getId(), member.getUser().getName());
             }
 
         }

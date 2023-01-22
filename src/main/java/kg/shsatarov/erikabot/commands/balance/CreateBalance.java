@@ -25,7 +25,7 @@ public class CreateBalance implements ExecutableCommand {
 
     @Override
     public String getName() {
-        return "create-balance";
+        return "balance-create";
     }
 
     @Override
@@ -42,7 +42,7 @@ public class CreateBalance implements ExecutableCommand {
 
         if (!userService.hasSalaryRole(member)) {
             slashCommandEvent
-                    .reply(StringFormatter.format("{} вы не обладаете ролью \"{}\"", member.getAsMention(), salaryRole.getName()))
+                    .reply(StringFormatter.format("{} вы не обладаете ролью \"{}\" :no_entry:sign:", member.getAsMention(), salaryRole.getName()))
                     .queue();
 
             return;
@@ -50,7 +50,7 @@ public class CreateBalance implements ExecutableCommand {
 
         if (userBalanceService.getEntityByDiscordUserId(member.getId()).isPresent()) {
             slashCommandEvent
-                    .reply(StringFormatter.format("{} у вас уже имеется баланс", member.getAsMention()))
+                    .reply(StringFormatter.format("{} у вас уже имеется баланс :warning:", member.getAsMention()))
                     .queue();
 
             return;
@@ -58,7 +58,7 @@ public class CreateBalance implements ExecutableCommand {
 
         userBalanceService.createUserBalance(member.getId(), member.getGuild().getId());
         slashCommandEvent
-                .reply(StringFormatter.format("{} баланс был создан!", member.getAsMention()))
+                .reply(StringFormatter.format("{} баланс был создан :coin:", member.getAsMention()))
                 .queue();
 
     }
