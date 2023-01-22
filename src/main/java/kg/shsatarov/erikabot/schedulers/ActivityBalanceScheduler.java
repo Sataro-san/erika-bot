@@ -53,7 +53,8 @@ public class ActivityBalanceScheduler {
             Member member = guild.getMemberById(userBalance.getDiscordUserId());
 
             //reward only if online and in voice channel
-            if (OnlineStatus.ONLINE.equals(member.getOnlineStatus()) && member.getVoiceState().inAudioChannel()) {
+            if ((OnlineStatus.ONLINE.equals(member.getOnlineStatus()) || OnlineStatus.DO_NOT_DISTURB.equals(member.getOnlineStatus()))
+                    && member.getVoiceState().inAudioChannel()) {
                 AudioChannelUnion memberVoiceChannel = member.getVoiceState().getChannel();
                 if (memberVoiceChannel.getMembers().size() > 1) {
                     rewardGuildMember(member);
@@ -91,8 +92,16 @@ public class ActivityBalanceScheduler {
 
         ActivityBalanceRate activityBalanceRate = activityBalanceRateOptional.get();
 
-        userBalanceService.addBalanceToUser(member.getId(), activityBalanceRate.getRate());
-        log.info("User {} {} : successfully issued {} KBS for activity {}", member.getId(), member.getUser().getName(), activityBalanceRate.getRate(), memberActivity.getName());
+
+        try {
+            userBalanceService.addBalanceToUser(member, activityBalanceRate.getRate());
+            log.info("User {} {} : successfully issued {} KBS for activity {}", member.getId(), member.getUser().getName(), activityBalanceRate.getRate(), memberActivity.getName());
+
+        } catch (Exception e) {
+            log.warn("User {} {} : issuance error {} KBS for activity {}, error: {}", member.getId(), member.getUser().getName(), activityBalanceRate.getRate(), memberActivity.getName(), e.getMessage());
+
+        }
+
 
     }
 

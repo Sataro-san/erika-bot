@@ -1,6 +1,7 @@
 package kg.shsatarov.erikabot.services;
 
 import kg.shsatarov.erikabot.entities.UserBalance;
+import net.dv8tion.jda.api.entities.Member;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -10,9 +11,9 @@ public interface UserBalanceService {
 
     List<UserBalance> getAll();
 
-    Optional<UserBalance> getEntityByDiscordUserId(String discordUserId);
+    Optional<UserBalance> getEntityByDiscordUserIdAndDiscordGuildId(String discordUserId, String discordGuildId);
 
-    UserBalance addBalanceToUser(String discordUserId, BigDecimal amount);
+    UserBalance addBalanceToUser(Member member, BigDecimal amount);
 
     UserBalance createUserBalance(String discordUserId, String discordGuildId);
 }

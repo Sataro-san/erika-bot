@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface UserBalanceRepository extends JpaRepository<UserBalance, Long> {
 
-    Optional<UserBalance> findByDiscordUserId(String discordUserId);
+    Optional<UserBalance> findByDiscordUserIdAndDiscordGuildId(String discordUserId, String discordGuildId);
 
 }

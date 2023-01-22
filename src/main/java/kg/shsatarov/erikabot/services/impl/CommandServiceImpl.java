@@ -20,7 +20,7 @@ public class CommandServiceImpl implements CommandService {
     public void executeCommand(SlashCommandInteractionEvent slashCommandEvent) {
 
         Optional.ofNullable(commandCache.getCommand(slashCommandEvent.getName()))
-                .ifPresentOrElse(x -> x.execute(slashCommandEvent), () -> log.warn("Unknown command {}", slashCommandEvent.getName()));
+                .ifPresentOrElse(command -> command.execute(slashCommandEvent), () -> log.warn("Unknown command {}", slashCommandEvent.getName()));
 
     }
 

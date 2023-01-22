@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 
 /**
- * any implementing class must have default constructor
+ * any implementing class must be @Bean
  * using {@link CommandType#SLASH} as deafult
  * override toCommandData() if options needed
  **/

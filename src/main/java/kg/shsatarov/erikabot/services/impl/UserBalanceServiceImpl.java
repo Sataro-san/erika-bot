@@ -5,6 +5,7 @@ import kg.shsatarov.erikabot.exceptions.UserBalanceException;
 import kg.shsatarov.erikabot.repositories.UserBalanceRepository;
 import kg.shsatarov.erikabot.services.UserBalanceService;
 import lombok.RequiredArgsConstructor;
+import net.dv8tion.jda.api.entities.Member;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -23,14 +24,15 @@ public class UserBalanceServiceImpl implements UserBalanceService {
     }
 
     @Override
-    public Optional<UserBalance> getEntityByDiscordUserId(String discordUserId) {
-        return userBalanceRepository.findByDiscordUserId(discordUserId);
+    public Optional<UserBalance> getEntityByDiscordUserIdAndDiscordGuildId(String discordUserId, String discordGuildId) {
+        return userBalanceRepository.findByDiscordUserIdAndDiscordGuildId(discordUserId, discordGuildId);
     }
 
     @Override
-    public UserBalance addBalanceToUser(String discordUserId, BigDecimal amount) {
+    public UserBalance addBalanceToUser(Member member, BigDecimal amount) {
 
-        UserBalance userBalance = getEntityByDiscordUserId(discordUserId).orElseThrow(() -> new UserBalanceException("Баланс пользователя не найден"));
+        UserBalance userBalance = getEntityByDiscordUserIdAndDiscordGuildId(member.getId(), member.getGuild().getId())
+                .orElseThrow(() -> new UserBalanceException("Баланс пользователя не найден"));
 
         userBalance.setBalance(userBalance.getBalance().add(amount));
 
