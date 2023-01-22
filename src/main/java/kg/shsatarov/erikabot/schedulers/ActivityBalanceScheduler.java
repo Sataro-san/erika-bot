@@ -57,6 +57,8 @@ public class ActivityBalanceScheduler {
                 AudioChannelUnion memberVoiceChannel = member.getVoiceState().getChannel();
                 if (memberVoiceChannel.getMembers().size() > 1) {
                     rewardGuildMember(member);
+                } else {
+                    log.info("User {} {} : voice channel members count < 2", member.getId(), member.getUser().getName());
                 }
 
             } else {
