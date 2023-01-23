@@ -38,16 +38,21 @@ public class ActivityBalanceScheduler {
                 .collect(Collectors.groupingBy(UserBalance::getDiscordGuildId));
 
         for (String guildId : guildUserBalances.keySet()) {
-            rewardGuildMembers(guildId, guildUserBalances.get(guildId));
+
+            Guild guild = jdaInstance.getGuildById(guildId);
+            log.info("Guild {} {} [START] rewarding members...", guild.getId(), guild.getName());
+            rewardGuildMembers(guild, guildUserBalances.get(guildId));
+            log.info("Guild {} {} [END] rewarding members...", guild.getId(), guild.getName());
+
         }
 
         log.info("End of ActivityReward");
 
     }
 
-    private void rewardGuildMembers(String guildId, List<UserBalance> userBalances) {
+    private void rewardGuildMembers(Guild guild, List<UserBalance> userBalances) {
 
-        Guild guild = jdaInstance.getGuildById(guildId);
+
 
         for (UserBalance userBalance : userBalances) {
             Member member = guild.getMemberById(userBalance.getDiscordUserId());
@@ -55,6 +60,7 @@ public class ActivityBalanceScheduler {
             //reward only if online and in voice channel
             if ((OnlineStatus.ONLINE.equals(member.getOnlineStatus()) || OnlineStatus.DO_NOT_DISTURB.equals(member.getOnlineStatus()))
                     && member.getVoiceState().inAudioChannel()) {
+
                 AudioChannelUnion memberVoiceChannel = member.getVoiceState().getChannel();
                 if (memberVoiceChannel.getMembers().size() > 1) {
                     rewardGuildMember(member);
