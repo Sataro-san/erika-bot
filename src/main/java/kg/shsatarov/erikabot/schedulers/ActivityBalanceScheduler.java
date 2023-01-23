@@ -83,6 +83,12 @@ public class ActivityBalanceScheduler {
 
         Activity memberActivity = memberActivityOptional.get();
 
+
+        if (memberActivity.asRichPresence() == null) {
+            log.warn("User {} {} - couldn't get memberActivity.asRichPresence() is null", member.getId(), member.getUser().getName());
+            return;
+        }
+
         Optional<ActivityBalanceRate> activityBalanceRateOptional = activityBalanceRateService.getByApplicationId(memberActivity.asRichPresence().getApplicationId());
 
         if (activityBalanceRateOptional.isEmpty()) {
