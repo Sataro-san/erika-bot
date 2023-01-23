@@ -26,14 +26,21 @@ public class ActivityBalanceRateServiceImpl implements ActivityBalanceRateServic
     }
 
     @Override
-    public List<ActivityBalanceRate> getAll() {
-        return activityBalanceRates;
+    public ActivityBalanceRate saveActivityBalanceRate(ActivityBalanceRate activityBalanceRate) {
+        return activityBalanceRateRepository.save(activityBalanceRate);
     }
 
     @Override
-    public Optional<ActivityBalanceRate> getByApplicationId(String applicationId) {
+    public List<ActivityBalanceRate> getAllByDiscordGuildId(String discordGuildId) {
         return activityBalanceRates.stream()
-                .filter(activityBalanceRate -> activityBalanceRate.getDiscordApplicationId().equals(applicationId))
+                .filter(activityRate -> activityRate.getDiscordGuildId().equals(discordGuildId))
+                .toList();
+    }
+
+    @Override
+    public Optional<ActivityBalanceRate> getByApplicationIdAndGuildId(String applicationId, String guildId) {
+        return activityBalanceRates.stream()
+                .filter(activityBalanceRate -> activityBalanceRate.getActivityDictionary().getDiscordApplicationId().equals(applicationId) && activityBalanceRate.getDiscordGuildId().equals(guildId))
                 .findAny();
     }
 

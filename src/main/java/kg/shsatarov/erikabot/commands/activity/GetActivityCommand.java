@@ -18,8 +18,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class GetActivityCommand implements ExecutableCommand {
 
-    private final UserService userService;
-
     @Override
     public String getName() {
         return "activity";

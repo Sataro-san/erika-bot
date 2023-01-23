@@ -95,7 +95,10 @@ public class ActivityBalanceScheduler {
             return;
         }
 
-        Optional<ActivityBalanceRate> activityBalanceRateOptional = activityBalanceRateService.getByApplicationId(memberActivity.asRichPresence().getApplicationId());
+        Optional<ActivityBalanceRate> activityBalanceRateOptional = activityBalanceRateService.getByApplicationIdAndGuildId(
+                memberActivity.asRichPresence().getApplicationId(),
+                member.getGuild().getId()
+        );
 
         if (activityBalanceRateOptional.isEmpty()) {
             log.info("User {} {} : current activity {} with id {} is not supported for BalanceReward", member.getId(), member.getUser().getName(), memberActivity.getName(), memberActivity.asRichPresence().getApplicationId());

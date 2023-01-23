@@ -7,9 +7,11 @@ import java.util.Optional;
 
 public interface ActivityBalanceRateService {
 
-    List<ActivityBalanceRate> getAll();
+    ActivityBalanceRate saveActivityBalanceRate(ActivityBalanceRate activityBalanceRate);
 
-    Optional<ActivityBalanceRate> getByApplicationId(String applicationId);
+    List<ActivityBalanceRate> getAllByDiscordGuildId(String discordGuildId);
+
+    Optional<ActivityBalanceRate> getByApplicationIdAndGuildId(String applicationId, String guildId);
 
     void reloadCache();
 

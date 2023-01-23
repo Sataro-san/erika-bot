@@ -15,9 +15,12 @@ public class ActivityBalanceRate {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ACTIVITY_BALANCE_RATES_SEQ")
     @SequenceGenerator(name = "ACTIVITY_BALANCE_RATES_SEQ", allocationSize = 1)
     private Long id;
-    private String discordApplicationId;
-    private String applicationName;
-    private String localName;
+
+    @ManyToOne
+    @JoinColumn(name = "activity_dictionary_id")
+    private ActivityDictionary activityDictionary;
+    @Column(nullable = false)
+    private String discordGuildId;
     private BigDecimal rate;
 
 }
