@@ -22,6 +22,9 @@ public class GuildCurrency {
     private String discordRoleId;
 
     @Column(nullable = false)
+    private String economistRoleId;
+
+    @Column(nullable = false)
     private String currencyName;
     @Column(nullable = false)
     private String currencyNameGenitive;

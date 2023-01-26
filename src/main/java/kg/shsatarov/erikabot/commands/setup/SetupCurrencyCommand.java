@@ -2,6 +2,7 @@ package kg.shsatarov.erikabot.commands.setup;
 
 import kg.shsatarov.erikabot.commands.ExecutableCommand;
 import kg.shsatarov.erikabot.entities.GuildCurrency;
+import kg.shsatarov.erikabot.exceptions.DiscordBotException;
 import kg.shsatarov.erikabot.services.GuildCurrencyService;
 import kg.shsatarov.erikabot.utils.StringFormatter;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,8 @@ public class SetupCurrencyCommand implements ExecutableCommand {
 
     private String currencyNameOption = "currency-name";
     private String shortCodeOption = "short-code";
-    private String roleOption = "role";
+    private String salaryRoleOption = "salary-role";
+    private String economistRoleOption = "economist-role";
     private String currencyNameGenitiveOption = "currency-name-genitive";
 
     private final GuildCurrencyService guildCurrencyService;
@@ -63,16 +65,20 @@ public class SetupCurrencyCommand implements ExecutableCommand {
             return;
         }
 
-        String roleId = Optional.ofNullable(slashCommandEvent.getOption(roleOption))
+        String roleId = Optional.ofNullable(slashCommandEvent.getOption(salaryRoleOption))
                 .map(OptionMapping::getAsString)
                 .orElse(null);
 
         if (!StringUtils.hasText(currencyName)) {
             slashCommandEvent
-                    .reply(StringFormatter.format("{} не указан параметр {} :no_entry_sign:", slashCommandEvent.getMember().getAsMention(), roleOption))
+                    .reply(StringFormatter.format("{} не указан параметр {} :no_entry_sign:", slashCommandEvent.getMember().getAsMention(), salaryRoleOption))
                     .queue();
             return;
         }
+
+        String economistRoleId = Optional.ofNullable(slashCommandEvent.getOption(economistRoleOption))
+                .map(OptionMapping::getAsString)
+                .orElseThrow(() -> new DiscordBotException(slashCommandEvent,"{} не указан параметр {} :warning:", slashCommandEvent.getMember().getAsMention(), economistRoleOption));
 
         String currencyNameGenitive = Optional.ofNullable(slashCommandEvent.getOption(currencyNameGenitiveOption))
                 .map(OptionMapping::getAsString)
@@ -86,6 +92,7 @@ public class SetupCurrencyCommand implements ExecutableCommand {
         guildCurrency.setCurrencyNameGenitive(StringUtils.hasText(currencyNameGenitive) ? currencyNameGenitive : currencyName);
         guildCurrency.setDiscordGuildId(slashCommandEvent.getGuild().getId());
         guildCurrency.setDiscordRoleId(roleId);
+        guildCurrency.setEconomistRoleId(economistRoleId);
 
         guildCurrencyService.saveCurrency(guildCurrency);
 
@@ -100,7 +107,8 @@ public class SetupCurrencyCommand implements ExecutableCommand {
                 .slash(getName(), getDescription())
                 .addOption(OptionType.STRING, currencyNameOption, "Название валюты")
                 .addOption(OptionType.STRING, shortCodeOption, "Сокращённое название")
-                .addOption(OptionType.ROLE, roleOption, "Роль которая получает валюту")
+                .addOption(OptionType.ROLE, salaryRoleOption, "Роль которая получает валюту")
+                .addOption(OptionType.ROLE, economistRoleOption, "Роль отвечающая за экономику")
                 .addOption(OptionType.STRING, currencyNameGenitiveOption, "[Опционально] Название валюты в род.падеже", false);
     }
 }
