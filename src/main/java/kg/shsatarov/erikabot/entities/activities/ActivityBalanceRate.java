@@ -1,4 +1,4 @@
-package kg.shsatarov.erikabot.entities;
+package kg.shsatarov.erikabot.entities.activities;
 
 import jakarta.persistence.*;
 import lombok.Getter;

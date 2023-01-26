@@ -1,6 +1,6 @@
-package kg.shsatarov.erikabot.repositories;
+package kg.shsatarov.erikabot.repositories.activities;
 
-import kg.shsatarov.erikabot.entities.ActivityDictionary;
+import kg.shsatarov.erikabot.entities.activities.ActivityDictionary;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

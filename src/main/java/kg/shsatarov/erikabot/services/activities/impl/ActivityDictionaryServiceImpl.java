@@ -1,8 +1,8 @@
-package kg.shsatarov.erikabot.services.impl;
+package kg.shsatarov.erikabot.services.activities.impl;
 
-import kg.shsatarov.erikabot.entities.ActivityDictionary;
-import kg.shsatarov.erikabot.repositories.ActivityDictionaryRepository;
-import kg.shsatarov.erikabot.services.ActivityDictionaryService;
+import kg.shsatarov.erikabot.entities.activities.ActivityDictionary;
+import kg.shsatarov.erikabot.repositories.activities.ActivityDictionaryRepository;
+import kg.shsatarov.erikabot.services.activities.ActivityDictionaryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

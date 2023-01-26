@@ -1,6 +1,6 @@
-package kg.shsatarov.erikabot.services;
+package kg.shsatarov.erikabot.services.activities;
 
-import kg.shsatarov.erikabot.entities.ActivityDictionary;
+import kg.shsatarov.erikabot.entities.activities.ActivityDictionary;
 
 import java.util.List;
 import java.util.Optional;

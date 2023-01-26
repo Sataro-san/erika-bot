@@ -1,9 +1,9 @@
-package kg.shsatarov.erikabot.services.impl;
+package kg.shsatarov.erikabot.services.activities.impl;
 
 import jakarta.annotation.PostConstruct;
-import kg.shsatarov.erikabot.entities.ActivityBalanceRate;
-import kg.shsatarov.erikabot.repositories.ActivityBalanceRateRepository;
-import kg.shsatarov.erikabot.services.ActivityBalanceRateService;
+import kg.shsatarov.erikabot.entities.activities.ActivityBalanceRate;
+import kg.shsatarov.erikabot.repositories.activities.ActivityBalanceRateRepository;
+import kg.shsatarov.erikabot.services.activities.ActivityBalanceRateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

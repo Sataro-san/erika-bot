@@ -1,7 +1,7 @@
 package kg.shsatarov.erikabot.commands.activity;
 
 import kg.shsatarov.erikabot.commands.ExecutableCommand;
-import kg.shsatarov.erikabot.services.ActivityBalanceRateService;
+import kg.shsatarov.erikabot.services.activities.ActivityBalanceRateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;

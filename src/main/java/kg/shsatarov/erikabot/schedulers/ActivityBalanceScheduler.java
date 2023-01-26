@@ -1,8 +1,8 @@
 package kg.shsatarov.erikabot.schedulers;
 
-import kg.shsatarov.erikabot.entities.ActivityBalanceRate;
+import kg.shsatarov.erikabot.entities.activities.ActivityBalanceRate;
 import kg.shsatarov.erikabot.entities.UserBalance;
-import kg.shsatarov.erikabot.services.ActivityBalanceRateService;
+import kg.shsatarov.erikabot.services.activities.ActivityBalanceRateService;
 import kg.shsatarov.erikabot.services.UserBalanceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,11 +28,10 @@ public class ActivityBalanceScheduler {
     private final ActivityBalanceRateService activityBalanceRateService;
     private final JDA jdaInstance;
 
-    @Scheduled(cron = "*/30 * * * * *")
+    @Scheduled(cron = "0 * * * * *")
     public void rewardActivity() {
 
         log.info("Starting ActivityReward");
-
 
         Map<String, List<UserBalance>> guildUserBalances = userBalanceService.getAll().stream()
                 .collect(Collectors.groupingBy(UserBalance::getDiscordGuildId));

@@ -1,8 +1,8 @@
 package kg.shsatarov.erikabot.commands.activity;
 
 import kg.shsatarov.erikabot.commands.ExecutableCommand;
-import kg.shsatarov.erikabot.entities.ActivityDictionary;
-import kg.shsatarov.erikabot.services.ActivityDictionaryService;
+import kg.shsatarov.erikabot.entities.activities.ActivityDictionary;
+import kg.shsatarov.erikabot.services.activities.ActivityDictionaryService;
 import kg.shsatarov.erikabot.utils.StringFormatter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

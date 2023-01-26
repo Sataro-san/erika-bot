@@ -79,13 +79,7 @@ public class SetupCurrencyCommand implements ExecutableCommand {
                 .orElse(null);
 
         Optional<GuildCurrency> guildCurrencyOptional = guildCurrencyService.getByGuildId(slashCommandEvent.getGuild().getId());
-        GuildCurrency guildCurrency;
-
-        if (guildCurrencyOptional.isEmpty()) {
-            guildCurrency = new GuildCurrency();
-        } else {
-            guildCurrency = guildCurrencyOptional.get();
-        }
+        GuildCurrency guildCurrency = guildCurrencyOptional.orElseGet(GuildCurrency::new);
 
         guildCurrency.setCurrencyName(currencyName);
         guildCurrency.setShortCode(shortCode);

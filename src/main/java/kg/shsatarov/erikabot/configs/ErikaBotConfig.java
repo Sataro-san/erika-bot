@@ -1,5 +1,6 @@
 package kg.shsatarov.erikabot.configs;
 
+import kg.shsatarov.erikabot.listeners.ModalListener;
 import kg.shsatarov.erikabot.listeners.SlashCommandListener;
 import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.JDA;
@@ -22,6 +23,7 @@ public class ErikaBotConfig {
 
 
     private final SlashCommandListener slashCommandListener;
+    private final ModalListener modalListener;
 
     @Bean
     public JDA jdaInstance() {
@@ -35,7 +37,7 @@ public class ErikaBotConfig {
                 .enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_PRESENCES)
                 .enableCache(CacheFlag.VOICE_STATE)
                 .enableCache(CacheFlag.ACTIVITY)
-                .addEventListeners(slashCommandListener)
+                .addEventListeners(slashCommandListener, modalListener)
                 .build();
     }
 
