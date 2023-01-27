@@ -13,7 +13,6 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import java.util.Optional;
 
@@ -45,51 +44,30 @@ public class SetupCurrencyCommand implements ExecutableCommand {
 
         String currencyName = Optional.ofNullable(slashCommandEvent.getOption(currencyNameOption))
                 .map(OptionMapping::getAsString)
-                .orElse(null);
-
-        if (!StringUtils.hasText(currencyName)) {
-            slashCommandEvent
-                    .reply(StringFormatter.format("{} не указан параметр {} :no_entry_sign:", slashCommandEvent.getMember().getAsMention(), currencyNameOption))
-                    .queue();
-            return;
-        }
+                .orElseThrow(() -> new DiscordBotException(slashCommandEvent, "{} не указан параметр {} :no_entry_sign:", slashCommandEvent.getMember().getAsMention(), currencyNameOption));
 
         String shortCode = Optional.ofNullable(slashCommandEvent.getOption(shortCodeOption))
                 .map(OptionMapping::getAsString)
-                .orElse(null);
-
-        if (!StringUtils.hasText(shortCode)) {
-            slashCommandEvent
-                    .reply(StringFormatter.format("{} не указан параметр {} :no_entry_sign:", slashCommandEvent.getMember().getAsMention(), shortCodeOption))
-                    .queue();
-            return;
-        }
+                .orElseThrow(() -> new DiscordBotException(slashCommandEvent, "{} не указан параметр {} :no_entry_sign:", slashCommandEvent.getMember().getAsMention(), shortCodeOption));
 
         String roleId = Optional.ofNullable(slashCommandEvent.getOption(salaryRoleOption))
                 .map(OptionMapping::getAsString)
-                .orElse(null);
-
-        if (!StringUtils.hasText(currencyName)) {
-            slashCommandEvent
-                    .reply(StringFormatter.format("{} не указан параметр {} :no_entry_sign:", slashCommandEvent.getMember().getAsMention(), salaryRoleOption))
-                    .queue();
-            return;
-        }
+                .orElseThrow(() -> new DiscordBotException(slashCommandEvent, "{} не указан параметр {} :no_entry_sign:", slashCommandEvent.getMember().getAsMention(), salaryRoleOption));
 
         String economistRoleId = Optional.ofNullable(slashCommandEvent.getOption(economistRoleOption))
                 .map(OptionMapping::getAsString)
-                .orElseThrow(() -> new DiscordBotException(slashCommandEvent,"{} не указан параметр {} :warning:", slashCommandEvent.getMember().getAsMention(), economistRoleOption));
+                .orElseThrow(() -> new DiscordBotException(slashCommandEvent, "{} не указан параметр {} :warning:", slashCommandEvent.getMember().getAsMention(), economistRoleOption));
 
         String currencyNameGenitive = Optional.ofNullable(slashCommandEvent.getOption(currencyNameGenitiveOption))
                 .map(OptionMapping::getAsString)
-                .orElse(null);
+                .orElse(currencyName);
 
         Optional<GuildCurrency> guildCurrencyOptional = guildCurrencyService.getByGuildId(slashCommandEvent.getGuild().getId());
         GuildCurrency guildCurrency = guildCurrencyOptional.orElseGet(GuildCurrency::new);
 
         guildCurrency.setCurrencyName(currencyName);
         guildCurrency.setShortCode(shortCode);
-        guildCurrency.setCurrencyNameGenitive(StringUtils.hasText(currencyNameGenitive) ? currencyNameGenitive : currencyName);
+        guildCurrency.setCurrencyNameGenitive(currencyNameGenitive);
         guildCurrency.setDiscordGuildId(slashCommandEvent.getGuild().getId());
         guildCurrency.setDiscordRoleId(roleId);
         guildCurrency.setEconomistRoleId(economistRoleId);

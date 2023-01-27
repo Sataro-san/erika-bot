@@ -1,5 +1,6 @@
-package kg.shsatarov.erikabot.commands;
+package kg.shsatarov.erikabot.commands.text;
 
+import kg.shsatarov.erikabot.commands.ExecutableCommand;
 import lombok.NoArgsConstructor;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.springframework.stereotype.Component;

@@ -43,47 +43,42 @@ public class SetupActivityCommand implements ExecutableCommand {
     @Override
     public void execute(SlashCommandInteractionEvent slashCommandEvent) {
 
-        try {
-            String applicationId = Optional.ofNullable(slashCommandEvent.getOption(applicationIdOption))
-                    .map(OptionMapping::getAsString)
-                    .orElseThrow( () -> new DiscordBotException("Не задано значение для опции {}", applicationIdOption));
+        String applicationId = Optional.ofNullable(slashCommandEvent.getOption(applicationIdOption))
+                .map(OptionMapping::getAsString)
+                .orElseThrow(() -> new DiscordBotException(slashCommandEvent, "Не задано значение для опции {}", applicationIdOption));
 
-            Double rate = Optional.ofNullable(slashCommandEvent.getOption(rateOption))
-                    .map(OptionMapping::getAsDouble)
-                    .orElseThrow(() -> new DiscordBotException("Не задано значение для опции {}", rateOption));
+        Double rate = Optional.ofNullable(slashCommandEvent.getOption(rateOption))
+                .map(OptionMapping::getAsDouble)
+                .orElseThrow(() -> new DiscordBotException(slashCommandEvent, "Не задано значение для опции {}", rateOption));
 
-            Optional<ActivityDictionary> activityDiscordOptional = activityDictionaryService.getByDiscordApplicationId(applicationId);
+        Optional<ActivityDictionary> activityDiscordOptional = activityDictionaryService.getByDiscordApplicationId(applicationId);
 
-            if (activityDiscordOptional.isEmpty()) {
-                slashCommandEvent
-                        .reply("Активность не найдена в справочнике :no_entry_sign:")
-                        .queue();
-                return;
-            }
-
-            ActivityBalanceRate activityBalanceRate;
-            Optional<ActivityBalanceRate> activityBalanceRateOptional = activityBalanceRateService.getByApplicationIdAndGuildId(applicationId, slashCommandEvent.getGuild().getId());
-
-            if (activityBalanceRateOptional.isPresent()) {
-                activityBalanceRate = activityBalanceRateOptional.get();
-            } else {
-                activityBalanceRate = new ActivityBalanceRate();
-            }
-
-            activityBalanceRate.setActivityDictionary(activityDiscordOptional.get());
-            activityBalanceRate.setDiscordGuildId(slashCommandEvent.getGuild().getId());
-            activityBalanceRate.setRate(new BigDecimal(rate));
-
-            activityBalanceRateService.saveActivityBalanceRate(activityBalanceRate);
-
-            activityBalanceRateService.reloadCache();
+        if (activityDiscordOptional.isEmpty()) {
             slashCommandEvent
-                    .reply(StringFormatter.format("Активность {} успешно сохранена :video_game:", activityDiscordOptional.get().getApplicationName()))
+                    .reply("Активность не найдена в справочнике :no_entry_sign:")
                     .queue();
-        } catch (Exception e) {
-            slashCommandEvent.reply(StringFormatter.format("Ошибка: {}", e.getMessage())).queue();
+            return;
         }
 
+        ActivityBalanceRate activityBalanceRate;
+        Optional<ActivityBalanceRate> activityBalanceRateOptional = activityBalanceRateService.getByApplicationIdAndGuildId(applicationId, slashCommandEvent.getGuild().getId());
+
+        if (activityBalanceRateOptional.isPresent()) {
+            activityBalanceRate = activityBalanceRateOptional.get();
+        } else {
+            activityBalanceRate = new ActivityBalanceRate();
+        }
+
+        activityBalanceRate.setActivityDictionary(activityDiscordOptional.get());
+        activityBalanceRate.setDiscordGuildId(slashCommandEvent.getGuild().getId());
+        activityBalanceRate.setRate(new BigDecimal(rate));
+
+        activityBalanceRateService.saveActivityBalanceRate(activityBalanceRate);
+
+        activityBalanceRateService.reloadCache();
+        slashCommandEvent
+                .reply(StringFormatter.format("Активность {} успешно сохранена :video_game:", activityDiscordOptional.get().getApplicationName()))
+                .queue();
     }
 
     @Override

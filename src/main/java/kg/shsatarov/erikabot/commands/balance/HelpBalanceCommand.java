@@ -33,23 +33,16 @@ public class HelpBalanceCommand implements ExecutableCommand {
     @Override
     public void execute(SlashCommandInteractionEvent slashCommandEvent) {
 
-        Optional<GuildCurrency> guildCurrencyOptional = guildCurrencyService.getByGuildId(slashCommandEvent.getGuild().getId());
-
-        if (guildCurrencyOptional.isEmpty()) {
-            slashCommandEvent.reply("На сервере не установлена валюта :no_entry_sign:").queue();
-            return;
-        }
-        GuildCurrency guildCurrency = guildCurrencyOptional.get();
+        GuildCurrency guildCurrency = guildCurrencyService.getByGuildId(slashCommandEvent.getGuild().getId())
+                .orElseThrow(() -> new DiscordBotException(slashCommandEvent, "На сервере не установлена валюта :no_entry_sign:"));
 
         Role currencyRole = slashCommandEvent.getGuild().getRoleById(guildCurrency.getDiscordRoleId());
         if (currencyRole == null) {
-            slashCommandEvent.reply("На сервере не установлена роль получателя валюты :no_entry_sign:").queue();
-            return;
+            throw new DiscordBotException(slashCommandEvent, "На сервере не установлена роль получателя валюты :no_entry_sign:");
         }
 
         Role economistRole = Optional.ofNullable(slashCommandEvent.getGuild().getRoleById(guildCurrency.getEconomistRoleId()))
-                .orElseThrow(() -> new DiscordBotException("На сервере не установлена роль отвечающая за Экономику :warning:"));
-
+                .orElseThrow(() -> new DiscordBotException(slashCommandEvent, "На сервере не установлена роль отвечающая за Экономику :warning:"));
 
         slashCommandEvent
                 .reply(StringFormatter.format(

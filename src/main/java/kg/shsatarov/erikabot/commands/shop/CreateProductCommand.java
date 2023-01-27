@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import kg.shsatarov.erikabot.commands.ExecutableCommand;
 import kg.shsatarov.erikabot.commands.ModalComponent;
 import kg.shsatarov.erikabot.entities.shop.Product;
+import kg.shsatarov.erikabot.exceptions.DiscordBotException;
 import kg.shsatarov.erikabot.services.shop.ProductService;
 import kg.shsatarov.erikabot.utils.StringFormatter;
 import lombok.RequiredArgsConstructor;
@@ -105,9 +106,7 @@ public class CreateProductCommand implements ExecutableCommand, ModalComponent {
                     .queue();
 
         } catch (NumberFormatException e) {
-            modalEvent
-                    .reply(StringFormatter.format("{}\nНе удалось создать товар \"{}\", невалидное значение цены: {}", modalEvent.getMember().getAsMention(), productName, productPriceString))
-                    .queue();
+            throw new DiscordBotException(modalEvent, "{}\nНе удалось создать товар \"{}\", невалидное значение цены: {}", modalEvent.getMember().getAsMention(), productName, productPriceString);
         }
 
     }

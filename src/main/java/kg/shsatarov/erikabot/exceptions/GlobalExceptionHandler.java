@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    @Pointcut("within(kg.shsatarov.erikabot.listeners..*)")
+    @Pointcut("within(kg.shsatarov.erikabot..*)")
     public void discordBotExceptionAwareMethods() {}
 
     @Around("discordBotExceptionAwareMethods()")

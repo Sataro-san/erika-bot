@@ -9,21 +9,14 @@ public class DiscordBotException extends RuntimeException {
     @Getter
     private IReplyCallback replyCallback;
 
-    public DiscordBotException(String message) {
+    public DiscordBotException(IReplyCallback replyCallback, String message) {
         super(message);
-    }
-
-    public DiscordBotException(String pattern, Object... arguments) {
-        super(StringFormatter.format(pattern, arguments));
+        this.replyCallback = replyCallback;
     }
 
     public DiscordBotException(IReplyCallback replyCallback, String pattern, Object... arguments) {
         super(StringFormatter.format(pattern, arguments));
         this.replyCallback = replyCallback;
-    }
-
-    public DiscordBotException(Throwable cause, String pattern, Object... arguments) {
-        super(StringFormatter.format(pattern, arguments), cause);
     }
 
 }

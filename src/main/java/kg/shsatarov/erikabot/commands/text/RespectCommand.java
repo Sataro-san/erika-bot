@@ -1,5 +1,6 @@
-package kg.shsatarov.erikabot.commands;
+package kg.shsatarov.erikabot.commands.text;
 
+import kg.shsatarov.erikabot.commands.ExecutableCommand;
 import kg.shsatarov.erikabot.utils.StringFormatter;
 import lombok.NoArgsConstructor;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -8,27 +9,26 @@ import org.springframework.stereotype.Component;
 
 @NoArgsConstructor
 @Component
-public class GoodManCommand implements ExecutableCommand {
+public class RespectCommand implements ExecutableCommand {
 
-    @Value("${constants.goodManId}")
-    private String goodManId;
+    @Value("${constants.respectUserId}")
+    private String respectUserId;
 
     @Override
     public String getName() {
-        return "krasavchik";
+        return "respect";
     }
 
     @Override
     public String getDescription() {
-        return "Вы знаете о ком речь";
+        return "Show some respect for Kana";
     }
 
     @Override
     public void execute(SlashCommandInteractionEvent slashCommandEvent) {
 
         slashCommandEvent
-                .reply(StringFormatter.format("<@{}> красавчик!", goodManId))
-                .queue();
+                .reply(StringFormatter.format("{} выразил уважение <@{}>", slashCommandEvent.getUser().getAsMention(), respectUserId)).queue();
 
     }
 }

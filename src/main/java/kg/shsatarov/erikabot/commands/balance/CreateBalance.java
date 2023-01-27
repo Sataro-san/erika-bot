@@ -2,6 +2,7 @@ package kg.shsatarov.erikabot.commands.balance;
 
 import kg.shsatarov.erikabot.commands.ExecutableCommand;
 import kg.shsatarov.erikabot.entities.GuildCurrency;
+import kg.shsatarov.erikabot.exceptions.DiscordBotException;
 import kg.shsatarov.erikabot.services.GuildCurrencyService;
 import kg.shsatarov.erikabot.services.UserBalanceService;
 import kg.shsatarov.erikabot.services.UserService;
@@ -12,8 +13,6 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 @Component
 @Slf4j
@@ -39,29 +38,17 @@ public class CreateBalance implements ExecutableCommand {
 
         Member member = slashCommandEvent.getMember();
 
-        Optional<GuildCurrency> guildCurrencyOptional = guildCurrencyService.getByGuildId(slashCommandEvent.getGuild().getId());
+        GuildCurrency guildCurrency = guildCurrencyService.getByGuildId(slashCommandEvent.getGuild().getId())
+                .orElseThrow(() -> new DiscordBotException(slashCommandEvent, "На сервере не установлена валюта :no_entry_sign:"));
 
-        if (guildCurrencyOptional.isEmpty()) {
-            slashCommandEvent.reply("На сервере не установлена валюта :no_entry_sign:").queue();
-            return;
-        }
-
-        Role salaryRole = slashCommandEvent.getGuild().getRoleById(guildCurrencyOptional.get().getDiscordRoleId());
+        Role salaryRole = slashCommandEvent.getGuild().getRoleById(guildCurrency.getDiscordRoleId());
 
         if (!userService.hasSalaryRole(member)) {
-            slashCommandEvent
-                    .reply(StringFormatter.format("{} вы не обладаете ролью ***{}*** :no_entry:sign:", member.getAsMention(), salaryRole.getName()))
-                    .queue();
-
-            return;
+            throw new DiscordBotException(slashCommandEvent, "{} вы не обладаете ролью ***{}*** :no_entry:sign:", member.getAsMention(), salaryRole.getName());
         }
 
         if (userBalanceService.getEntityByDiscordUserIdAndDiscordGuildId(member.getId(), member.getGuild().getId()).isPresent()) {
-            slashCommandEvent
-                    .reply(StringFormatter.format("{} у вас уже имеется баланс на данном сервере :warning:", member.getAsMention()))
-                    .queue();
-
-            return;
+            throw new DiscordBotException(slashCommandEvent, "{} вы не обладаете ролью ***{}*** :no_entry:sign:", member.getAsMention(), salaryRole.getName());
         }
 
         userBalanceService.createUserBalance(member.getId(), member.getGuild().getId());
